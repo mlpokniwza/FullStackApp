@@ -1,0 +1,116 @@
+<div *ngIf="hero">
+  <div class="card mb-3">
+    <div class="card-body">
+      <br />
+      <h2 *ngIf="hero.id">{{ hero.name | uppercase }} Details</h2>
+      <h2 *ngIf="!hero.id">New Hero</h2>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <div class="form-outline w-100">
+            <label class="form-label" for="name">Hero Name :</label>
+            <input
+              class="form-control form-control"
+              [(ngModel)]="hero.name"
+              placeholder="Hero Name"
+              #name="ngModel"
+              required
+            />
+          </div>
+          <div
+            [hidden]="name.valid || name.pristine"
+            class="alert alert-danger"
+          >
+            Name is required
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-outline w-100">
+            <label class="form-label" for="id">Place :</label>
+            <input
+              class="form-control form-control"
+              [(ngModel)]="hero.place"
+              placeholder="Place"
+              #place="ngModel"
+              required
+            />
+            <div
+              [hidden]="place.valid || place.pristine"
+              class="alert alert-danger"
+            >
+              Place is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="row">
+        <div class="col">
+          <div class="form-outline w-100">
+            <label class="form-label" for="power">First Name :</label>
+            <input
+              class="form-control form-control"
+              [(ngModel)]="hero.firstName"
+              placeholder="First Name"
+              #firstName="ngModel"
+              required
+            />
+            <div
+              [hidden]="firstName.valid || firstName.pristine"
+              class="alert alert-danger"
+            >
+              First Name is required
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-outline w-100">
+            <label class="form-label" for="point">Last Name :</label>
+            <input
+              class="form-control form-control"
+              [(ngModel)]="hero.lastName"
+              placeholder="Last Name"
+              #lastName="ngModel"
+              required
+            />
+            <div
+              [hidden]="lastName.valid || lastName.pristine"
+              class="alert alert-danger"
+            >
+              Last Name is required
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: right">
+        <br />
+
+        <button
+          class="btn btn-danger mr-1"
+          (click)="deleteHero(hero)"
+          *ngIf="hero.id"
+        >
+          Delete
+        </button>
+
+        <button
+          style="margin-left: 0.5cm"
+          class="btn btn-success mr-1"
+          (click)="updateHero(hero)"
+          *ngIf="hero.id"
+        >
+          Save
+        </button>
+        <button
+          class="btn btn-success"
+          (click)="createHero(hero)"
+          *ngIf="!hero.id"
+        >
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
