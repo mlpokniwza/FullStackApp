@@ -90,7 +90,7 @@ namespace HeroAPI.Controllers
         //}
 
         [HttpGet]
-        public async Task<ActionResult<List<SuperHero>>> GetSuperHeroes(string? id, string? name, string? firstName, string? lastName, string? place, int limit)
+        public async Task<ActionResult<List<SuperHero>>> GetSuperHeroes(string? id, string? name, string? firstName, string? lastName, string? place, int? limit)
         {
             var query = _context.SuperHeroes.AsQueryable();
 
