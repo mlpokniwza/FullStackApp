@@ -1,5 +1,6 @@
 ﻿using HeroAPI.Data;
 using HeroAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 
 namespace HeroAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SuperHeroController : ControllerBase
@@ -88,7 +90,7 @@ namespace HeroAPI.Controllers
         //}
 
         [HttpGet]
-        public async Task<ActionResult<List<SuperHero>>> GetSuperHeroes(string? id,string? name, string? firstName,string? lastName,string? place, int limit)
+        public async Task<ActionResult<List<SuperHero>>> GetSuperHeroes(string? id, string? name, string? firstName, string? lastName, string? place, int limit)
         {
             var query = _context.SuperHeroes.AsQueryable();
 
