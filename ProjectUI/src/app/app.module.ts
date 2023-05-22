@@ -15,9 +15,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NavComponent } from './nav/nav.component';
 
 @NgModule({
-  declarations: [AppComponent, EditHeroComponent],
+  declarations: [AppComponent, EditHeroComponent, NavComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
