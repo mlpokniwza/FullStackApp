@@ -1,36 +1,67 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <a class="navbar-item text-white pr-2" href="#">Home</a>
-  <a class="navbar-item text-white pr-2" href="#">Link</a>
-  <div class="dropdown">
-    <button
-      class="btn text-white dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      Dropdown
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="#">Action</a>
-      <a class="dropdown-item" href="#">Another action</a>
-      <a class="dropdown-item" href="#">Something else here</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Hero App</a>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Matches</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Lists</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Messages</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">logout</a>
+        </li>
+      </ul>
+
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle"> Dropdown link </a>
+
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#"
+            ><i class="fa fa-user"></i> Edit Profile</a
+          >
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div>
+
+      <form
+        *ngIf="!loggedIn()"
+        #loginForm="ngForm"
+        class="d-flex w-auto"
+        (ngSubmit)="login()"
+      >
+        <input
+          type="text"
+          style="margin-right: 10px"
+          class="form-control round"
+          placeholder="Username"
+          [(ngModel)]="model.username"
+          name="username"
+          #username=""
+          required
+        />
+        <input
+          type="password"
+          style="margin-right: 10px"
+          class="form-control round"
+          placeholder="Password"
+          [(ngModel)]="model.password"
+          name="password"
+          required
+        />
+        <button
+          [disabled]="!loginForm.valid"
+          class="btn btn-success round"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
     </div>
   </div>
-  <button class="btn btn-disabled text-white pr-2" disabled>Disabled</button>
-  <nav class="navbar navbar-dark bg-dark ml-auto mr-1">
-    <form class="form-inline">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
-  </nav>
 </nav>

@@ -1,16 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { SuperHero } from './_models/super-hero';
-import { SuperHeroService } from './_services/super-hero.service';
+import { SuperHero } from '../_models/super-hero';
+import { SuperHeroService } from '../_services/super-hero.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormControl, NgForm } from '@angular/forms';
+
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class ListComponent implements OnInit, AfterViewInit {
   title = 'Tour of Heroes';
   // myForm: FormGroup;
   heroes: SuperHero[] = [];

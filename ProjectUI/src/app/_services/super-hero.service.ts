@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SuperHero } from '../models/super-hero';
+import { SuperHero } from '../_models/super-hero';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
@@ -43,7 +43,7 @@ export class SuperHeroService {
     limit: number
   ): Observable<any> {
     console.log('service', limit, id, name, firstName, lastName, place);
-    var url = `${environment.apiUrl}/${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
+    var url = `${environment.apiUrl}${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
     console.log(url);
     return this.http.get<SuperHero[]>(url);
   }

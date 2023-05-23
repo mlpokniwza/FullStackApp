@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { EditHeroComponent } from './components/edit-hero/edit-hero.component';
+import { EditHeroComponent } from './edit-hero/edit-hero.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
@@ -16,9 +16,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
+import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
-  declarations: [AppComponent, EditHeroComponent, NavComponent],
+  declarations: [AppComponent, EditHeroComponent, NavComponent, HomeComponent, RegisterComponent, ListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
