@@ -7,20 +7,22 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  private url = '/Auth';
+  private url = '/Auth/';
 
   constructor(private http: HttpClient) {}
 
-  login(models: any) {
-    return this.http
-      .post(environment.apiUrl + this.url + '/login', models)
-      .pipe(
-        map((response: any) => {
-          const user = response;
-          if (user) {
-            localStorage.setItem('token', user.token);
-          }
-        })
-      );
+  login(model: any) {
+    return this.http.post(environment.apiUrl + this.url + 'login', model).pipe(
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          localStorage.setItem('token', user.token);
+        }
+      })
+    );
+  }
+
+  register(model: any) {
+    return this.http.post(environment.apiUrl + this.url + 'register', model);
   }
 }
