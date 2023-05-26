@@ -43,8 +43,7 @@ export class SuperHeroService {
     limit: number
   ): Observable<any> {
     console.log('service', limit, id, name, firstName, lastName, place);
-    var url = `${environment.apiUrl}${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
-    console.log(url);
+    var url = `${environment.apiUrl}/${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
     return this.http.get<SuperHero[]>(url);
   }
 

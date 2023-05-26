@@ -28,7 +28,7 @@ namespace HeroAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)
+        public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
             // validate username and password
             if (!ModelState.IsValid)
@@ -45,9 +45,9 @@ namespace HeroAPI.Controllers
 
             return StatusCode(201);
         }
-        
+
         [HttpPost("login")]
-        public async Task<IActionResult> Register([FromBody]UserForLoginDto userForLoginDto)
+        public async Task<IActionResult> Register([FromBody] UserForLoginDto userForLoginDto)
         {
             //check user matches
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
@@ -73,12 +73,13 @@ namespace HeroAPI.Controllers
                 Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = creds
             };
-            
+
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new{
+            return Ok(new
+            {
                 token = tokenHandler.WriteToken(token)
             });
         }
