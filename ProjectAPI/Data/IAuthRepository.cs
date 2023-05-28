@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HeroAPI.Models;
+using ProjectAPI.Models;
 
-namespace HeroAPI.Data
+namespace ProjectAPI.Data
 {
     public interface IAuthRepository
     {

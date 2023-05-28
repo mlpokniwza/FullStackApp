@@ -1,13 +1,9 @@
-﻿using HeroAPI.Data;
+﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
-using System.Text;
-using Microsoft.Extensions.Configuration;
-
-
+using ProjectAPI.Data;
+using ProjectAPI.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,26 +13,24 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddCors(options => options.AddPolicy(name: "SuperHeroOrigins",
-    policy =>
-    {
-        policy.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
-    }
-    ));
 
-
+builder.Services.AddCors();
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(option =>
     {
         option.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
             .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
             ValidateIssuer = false,
             ValidateAudience = false
@@ -58,7 +52,8 @@ app.UseHttpsRedirection();
 app.UseCors(x => x
     .AllowAnyOrigin()
     .AllowAnyMethod()
-    .AllowAnyHeader());
+    .AllowAnyHeader()
+    .WithOrigins("http://localhost:4200"));
 
 app.UseAuthentication();
 
@@ -66,4 +61,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(context);
+}
+catch (Exception ex)
+{
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "Failed to migrate");
+}
 app.Run();

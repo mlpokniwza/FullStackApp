@@ -1,4 +1,4 @@
-﻿namespace HeroAPI.Models
+﻿namespace ProjectAPI.Models
 {
     public class SuperHero
     {

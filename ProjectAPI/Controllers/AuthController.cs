@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using System.IdentityModel.Tokens.Jwt;
-using HeroAPI.Data;
-using HeroAPI.DTO;
-using HeroAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using ProjectAPI.Data;
+using ProjectAPI.DTO;
+using ProjectAPI.Models;
 
-namespace HeroAPI.Controllers
+namespace ProjectAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

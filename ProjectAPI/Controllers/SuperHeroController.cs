@@ -1,13 +1,10 @@
-﻿using HeroAPI.Data;
-using HeroAPI.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.Tokens;
-using System.Collections.Generic;
+using ProjectAPI.Data;
+using ProjectAPI.Models;
 
-namespace HeroAPI.Controllers
+namespace ProjectAPI.Controllers
 {
     [Authorize]
     [Route("api/[controller]")]
