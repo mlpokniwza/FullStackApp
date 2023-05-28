@@ -11,7 +11,7 @@ using ProjectAPI.Data;
 namespace HeroAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230528144514_InitialCreate")]
+    [Migration("20230528145456_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,11 +29,15 @@ namespace HeroAPI.Data.Migrations
                     b.Property<bool>("IsMain")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("PublicId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Url")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -132,9 +136,13 @@ namespace HeroAPI.Data.Migrations
 
             modelBuilder.Entity("ProjectAPI.Models.Photo", b =>
                 {
-                    b.HasOne("ProjectAPI.Models.User", null)
+                    b.HasOne("ProjectAPI.Models.User", "User")
                         .WithMany("Photos")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ProjectAPI.Models.User", b =>
