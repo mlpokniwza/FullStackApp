@@ -33,10 +33,3 @@ $HeroUI-theme: mat.define-light-theme((
 // that you are using.
 @include mat.all-component-themes($HeroUI-theme);
 
-/* You can add global styles to this file, and also import other style files */
-
-/* Importing Bootstrap SCSS file. */
-@import 'bootstrap/scss/bootstrap';
-@import "../node_modules/bootstrap/scss/bootstrap";
-
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

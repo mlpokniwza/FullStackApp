@@ -5,16 +5,16 @@ import { SuperHeroService } from 'src/app/_services/super-hero.service';
 @Component({
   selector: 'app-edit-hero',
   templateUrl: './edit-hero.component.html',
-  styleUrls: ['./edit-hero.component.scss'],
+  styleUrls: ['./edit-hero.component.css'],
 })
 export class EditHeroComponent implements OnInit {
   [x: string]: any;
   @Input() hero?: SuperHero;
   @Output() heroesUpdated = new EventEmitter<SuperHero[]>();
 
-  constructor(private superHeroService: SuperHeroService) {}
+  constructor(private superHeroService: SuperHeroService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   updateHero(hero: SuperHero) {
     this.superHeroService
