@@ -7,6 +7,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListComponent } from './list/list.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'list/:id', component: EditHeroComponent },
   { path: 'members', component: MemberListComponent },
   { path: 'members/:username', component: MemberDetailComponent },
+  { path: 'member/edit', component: MemberEditComponent },
   { path: 'messages', component: MessagesComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];

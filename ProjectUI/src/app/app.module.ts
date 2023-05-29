@@ -33,6 +33,7 @@ import { LoginComponent } from './login/login.component';
 import { MembersCardComponent } from './members/members-card/members-card.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     NotFoundComponent,
     MessagesComponent,
     LoginComponent,
-    MembersCardComponent
+    MembersCardComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,
