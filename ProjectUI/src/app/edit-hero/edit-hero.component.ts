@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SuperHero } from 'src/app/_models/super-hero';
-import { SuperHeroService } from 'src/app/_services/super-hero.service';
+import { SuperHero } from 'app/_models/super-hero';
+import { SuperHeroService } from 'app/_services/super-hero.service';
 
 @Component({
   selector: 'app-edit-hero',

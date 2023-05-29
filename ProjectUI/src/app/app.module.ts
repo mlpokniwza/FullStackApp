@@ -19,9 +19,14 @@ import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ListComponent } from './list/list.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
-  declarations: [AppComponent, EditHeroComponent, NavComponent, HomeComponent, RegisterComponent, ListComponent],
+  declarations: [AppComponent, EditHeroComponent, NavComponent, HomeComponent, RegisterComponent, ListComponent, MemberListComponent, MemberDetailComponent, ServerErrorComponent, NotFoundComponent, MessagesComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,4 +52,4 @@ import { ListComponent } from './list/list.component';
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

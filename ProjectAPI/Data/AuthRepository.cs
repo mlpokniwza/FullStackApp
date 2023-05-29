@@ -51,7 +51,6 @@ namespace ProjectAPI.Data
 
 
             return user;
-
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
