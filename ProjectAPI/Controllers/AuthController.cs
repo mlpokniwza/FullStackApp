@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.DTO;
@@ -16,11 +18,13 @@ namespace ProjectAPI.Controllers
         private readonly IAuthRepository _repo;
 
         private readonly IConfiguration _config;
+        private readonly DataContext _context;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, DataContext context)
         {
             _config = config;
             _repo = repo;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -42,42 +46,25 @@ namespace ProjectAPI.Controllers
             return createUser;
         }
 
+        
         [HttpPost("login")]
-        public async Task<ActionResult<User>> Login([FromBody] UserForLoginDto userForLoginDto)
+        public async Task<ActionResult<User>> Login(UserForLoginDto userForLoginDto)
         {
-            //check user matches
-            var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
+            var user = await _context.Users.SingleOrDefaultAsync(x =>
+            x.Username == userForLoginDto.Username);
 
-            if (userFromRepo == null)
-                return Unauthorized("invalid username");
+            if (user == null) return Unauthorized("invalid username");
 
-            var claims = new[]
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userForLoginDto.Password));
+
+            for (int i = 0; i < computedHash.Length; i++)
             {
-                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
-            };
-            // create security key
-            var key = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config.GetSection("AppSettings:Token").Value));
+                if (computedHash[i] != user.PasswordHash[i]) return Unauthorized("invalid password");
+            }
 
-            // encrypt key with hashing algorithm
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return Ok(new
-            {
-                token = tokenHandler.WriteToken(token)
-            });
+            return user;
         }
     }
 }
