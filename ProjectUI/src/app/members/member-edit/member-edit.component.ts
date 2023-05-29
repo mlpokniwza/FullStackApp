@@ -22,7 +22,6 @@ export class MemberEditComponent implements OnInit {
     this.authService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
         this.user = user
-        console.log(this.user);
       }
     })
   }
@@ -37,15 +36,17 @@ export class MemberEditComponent implements OnInit {
     this.memberService.getMember(this.user.username).subscribe({
       next: temp_member => {
         this.member = temp_member;
-        console.log(this.member);
       }
     })
   }
 
   updateMember(){
-    console.log(this.member);
-    this.toastr.success('Member updated');
-    this.editForm?.reset(this.member);
+    this.memberService.updateMember(this.editForm?.value).subscribe({
+      next: _ => {
+        this.toastr.success('Member updated');
+        this.editForm?.reset(this.member);
+      }
+    })
   }
 
 

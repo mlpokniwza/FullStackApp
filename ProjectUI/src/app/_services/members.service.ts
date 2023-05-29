@@ -12,11 +12,11 @@ export class MembersService {
   constructor(public http: HttpClient) { }
 
   getMembers() {
-    return this.http.get<Member[]>(this.baseUrl + 'users');
+    return this.http.get<Member[]>(this.baseUrl + 'Users');
   }
 
   getMember(username: string) {
-    return this.http.get<Member>(this.baseUrl + 'users/' + username);
+    return this.http.get<Member>(this.baseUrl + 'Users/' + username);
   }
 
   // getHttpOptions() {
@@ -29,4 +29,7 @@ export class MembersService {
   //     })
   //   }
   // }
+  updateMember(member: Member) {
+    return this.http.put(this.baseUrl + 'Users', member);
+  }
 }

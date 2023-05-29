@@ -36,11 +36,11 @@ export class MemberDetailComponent {
   getImages() {
     if (!this.member) return [];
     const imageUrls = [];
-    for (const photo of this.member.photo) {
+    for (const photos of this.member.photo) {
       imageUrls.push({
-        small: photo.url,
-        medium: photo.url,
-        big: photo.url,
+        small: photos.url,
+        medium: photos.url,
+        big: photos.url,
 
       })
     }
@@ -50,8 +50,8 @@ export class MemberDetailComponent {
     const username = this.route.snapshot.paramMap.get('username');
     if (!username) return;
     this.membersService.getMember(username).subscribe({
-      next: temp_member => {
-        this.member = temp_member
+      next: member => {
+        this.member = member
         this.galleryImages = this.getImages();
       }
     })
