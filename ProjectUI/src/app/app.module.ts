@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ToastrModule } from 'ngx-toastr';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 
 
 import { AppComponent } from './app.component';
@@ -28,22 +30,25 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
-import { ToastrModule } from 'ngx-toastr';
+import { MembersCardComponent } from './members/members-card/members-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    EditHeroComponent, 
-    NavComponent, 
-    HomeComponent, 
-    RegisterComponent, 
-    ListComponent, 
+    AppComponent,
+    EditHeroComponent,
+    NavComponent,
+    HomeComponent,
+    RegisterComponent,
+    ListComponent,
     MemberListComponent,
-    MemberDetailComponent, 
-    ServerErrorComponent, 
-    NotFoundComponent, 
-    MessagesComponent, 
-    LoginComponent
+    MemberDetailComponent,
+    ServerErrorComponent,
+    NotFoundComponent,
+    MessagesComponent,
+    LoginComponent,
+    MembersCardComponent
   ],
   imports: [
     BrowserModule,
@@ -61,12 +66,16 @@ import { ToastrModule } from 'ngx-toastr';
     MatPaginatorModule,
     ReactiveFormsModule,
     ToastrModule.forRoot({
-      positionClass :'toast-bottom-right'
-    })
+      positionClass: 'toast-bottom-right'
+    }),
+    TabsModule.forRoot(),
+    NgxGalleryModule,
   ],
   exports: [
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

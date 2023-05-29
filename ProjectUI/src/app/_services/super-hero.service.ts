@@ -43,25 +43,25 @@ export class SuperHeroService {
     limit: number
   ): Observable<any> {
     console.log('service', limit, id, name, firstName, lastName, place);
-    var url = `${environment.apiUrl}/${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
+    var url = `${environment.apiUrl}${this.url}?id=${id}&name=${name}&firstName=${firstName}&lastName=${lastName}&place=${place}&limit=${limit}`;
     return this.http.get<SuperHero[]>(url);
   }
 
   public updateHero(hero: SuperHero): Observable<SuperHero[]> {
     return this.http.put<SuperHero[]>(
-      `${environment.apiUrl}/${this.url}`,
+      `${environment.apiUrl}${this.url}`,
       hero
     );
   }
   public createHero(hero: SuperHero): Observable<SuperHero[]> {
     return this.http.post<SuperHero[]>(
-      `${environment.apiUrl}/${this.url}`,
+      `${environment.apiUrl}${this.url}`,
       hero
     );
   }
   public deleteHero(hero: SuperHero): Observable<SuperHero[]> {
     return this.http.delete<SuperHero[]>(
-      `${environment.apiUrl}/${this.url}/${hero.id}`
+      `${environment.apiUrl}${this.url}/${hero.id}`
     );
   }
 

@@ -11,9 +11,9 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'list', component: ListComponent },
-  { path: 'list/id', component: EditHeroComponent },
+  { path: 'list/:id', component: EditHeroComponent },
   { path: 'members', component: MemberListComponent },
-  { path: 'members/id', component: MemberDetailComponent },
+  { path: 'members/:username', component: MemberDetailComponent },
   { path: 'messages', component: MessagesComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];

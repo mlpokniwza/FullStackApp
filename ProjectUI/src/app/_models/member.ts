@@ -1,11 +1,13 @@
+import { Photo } from "./photo";
+
 export interface Member {
     id: number
     username: string
-    photosUrl: string
+    photoUrl: string
     age: number
     knownAs: string
     created: Date
-    lastActive: string
+    lastActive: Date
     gender: string
     introduction: string
     lookingFor: string
@@ -13,10 +15,4 @@ export interface Member {
     city: string
     country: string
     photos: Photo[]
-}
-
-export interface Photo {
-    id: number
-    url: string
-    isMain: boolean
 }

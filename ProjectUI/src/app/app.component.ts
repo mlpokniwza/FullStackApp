@@ -1,10 +1,6 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SuperHero } from './_models/super-hero';
-import { SuperHeroService } from './_services/super-hero.service';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { FormGroup, FormControl, NgForm } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
 import { User } from './_models/user';
 @Component({
