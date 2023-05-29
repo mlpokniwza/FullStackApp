@@ -29,21 +29,19 @@ export class MemberDetailComponent {
         preview: false
       }
     ]
-
-    this.galleryImages = this.getImages();
   }
 
   getImages() {
     if (!this.member) return [];
     const imageUrls = [];
-    for (const photos of this.member.photo) {
+    for (const photo of this.member.photos) {
       imageUrls.push({
-        small: photos.url,
-        medium: photos.url,
-        big: photos.url,
-
+        small: photo.url,
+        medium: photo.url,
+        big: photo.url,
       })
     }
+    console.log(imageUrls);
     return imageUrls;
   }
   loadMember() {

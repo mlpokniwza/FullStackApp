@@ -34,6 +34,8 @@ import { MembersCardComponent } from './members/members-card/members-card.compon
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -72,11 +74,15 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
     }),
     TabsModule.forRoot(),
     NgxGalleryModule,
+    NgxSpinnerModule.forRoot({
+      type: 'line-scale.party'
+    }),
   ],
   exports: [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

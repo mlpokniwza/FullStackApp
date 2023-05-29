@@ -6,7 +6,6 @@ using ProjectAPI.Models;
 
 namespace ProjectAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SuperHeroController : ControllerBase
