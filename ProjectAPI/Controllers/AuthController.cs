@@ -24,7 +24,7 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserForRegisterDto userForRegisterDto)
+        public async Task<ActionResult<User>> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
             // validate username and password
             if (!ModelState.IsValid)
@@ -39,17 +39,17 @@ namespace ProjectAPI.Controllers
 
             var createUser = await _repo.Register(userToCreate, userForRegisterDto.Username);
 
-            return StatusCode(201);
+            return createUser;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Register([FromBody] UserForLoginDto userForLoginDto)
+        public async Task<ActionResult<User>> Login([FromBody] UserForLoginDto userForLoginDto)
         {
             //check user matches
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
             if (userFromRepo == null)
-                return Unauthorized();
+                return Unauthorized("invalid username");
 
             var claims = new[]
             {
