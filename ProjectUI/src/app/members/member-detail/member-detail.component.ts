@@ -36,7 +36,7 @@ export class MemberDetailComponent {
   getImages() {
     if (!this.member) return [];
     const imageUrls = [];
-    for (const photo of this.member.photos) {
+    for (const photo of this.member.photo) {
       imageUrls.push({
         small: photo.url,
         medium: photo.url,

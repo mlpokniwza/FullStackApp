@@ -1,1 +1,71 @@
-<h1 *ngIf="member">{{member.username}}</h1>
+<div class="row" *ngIf="member">
+    <div class="col-4">
+        <h1>Your Profile</h1>
+    </div>
+    <div class="col-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <p><strong>Information: </strong>You have mage changes.</p>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <img src="{{member.photosUrl}}" alt="{{member.knownAs}}" class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Last active:</strong>
+                    <p>{{member.lastActive}}</p>
+                </div>
+                <div>
+                    <strong>Member since:</strong>
+                    <p>{{member.created}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" [disabled]="!editForm.dirty" class="btn btn-success" form="editForm">Save
+                    changes</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="About {{member.knownAs}}">
+                <div class="container">
+                    <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
+                        <h4 class="mt-2">Description</h4>
+                        <textarea class="form-control" name="introduction" rows="6"
+                            [(ngModel)]="member.introduction"></textarea>
+
+                        <h4 class="mt-2">Looking for</h4>
+                        <textarea class="form-control" name="lookingFor" rows="6"
+                            [(ngModel)]="member.lookingFor"></textarea>
+
+                        <h4 class="mt-2">Interestes</h4>
+                        <textarea class="form-control" name="interests" rows="6"
+                            [(ngModel)]="member.interests"></textarea>
+
+                        <h4 class="mt-2">Location Details: </h4>
+                        <div class="d-flex flex-row align-items-center">
+                            <label for="city">City: </label>
+                            <input class="form-control mx-2" name="city" type="text" [(ngModel)]="member.city">
+                            <label for="country">Country: </label>
+                            <input class="form-control mx-2" name="country" type="text" [(ngModel)]="member.city">
+                        </div>
+                    </form>
+                </div>
+            </tab>
+            <tab heading="Edit Photos">
+                <div class="container">
+                    <h4>Phot</h4>
+                </div>
+            </tab>
+        </tabset>
+    </div>
+</div>
