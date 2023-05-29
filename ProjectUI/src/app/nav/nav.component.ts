@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { User } from 'app/_models/user';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -9,28 +13,21 @@ import { AuthService } from '../_services/auth.service';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService,
+    private router: Router, private toastr: ToastrService) { }
 
-  ngOnInit(): void { }
-
-  login() {
-    this.authService.login(this.model).subscribe(
-      (next) => {
-        console.log('Login in success');
-      },
-      (error) => {
-        console.log('Failed to login');
-      }
-    );
+  ngOnInit(): void {
   }
 
-  loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+  login() {
+    this.authService.login(this.model).subscribe({
+      next: _ => this.router.navigateByUrl('/members'),
+      error: error => this.toastr.error(error)
+    })
   }
 
   logout() {
-    localStorage.removeItem('token');
-    console.log('logged out');
+    this.authService.logout();
+    this.router.navigateByUrl('/');
   }
 }

@@ -5,88 +5,29 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormGroup, FormControl, NgForm } from '@angular/forms';
+import { AuthService } from './_services/auth.service';
+import { User } from './_models/user';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  title = 'Tour of Heroes';
-  // myForm: FormGroup;
-  heroes: SuperHero[] = [];
-  heroToEdit: SuperHero;
+export class AppComponent implements OnInit{
 
-  limit: number = 3;
-  id: string = '';
-  name: string = '';
-  firstName: string = '';
-  lastName: string = '';
-  place: string = '';
-  dirtyFormID = 'something';
-  resetForm = <HTMLFormElement>document.getElementById(this.dirtyFormID);
-
-  public test(): void {
-    console.log(this.heroToEdit);
-  }
-
-  public displayedColumns = [
-    'id',
-    'name',
-    'firstName',
-    'lastName',
-    'place',
-    'edit',
-  ];
-
-  @ViewChild(MatSort) sort: MatSort;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  constructor(private superHeroService: SuperHeroService) {
-    // this.myForm = new FormGroup({
-    //   mySelect: new FormControl(''),
-    // });
-  }
+  constructor(private authService: AuthService) {}
 
   public dataSource = new MatTableDataSource<SuperHero>();
 
   ngOnInit(): void {
-    // this.getLimitedRows();
-    this.getFilter();
+    this.setCurrentUser();
+
   }
 
-  getFilter(): void {
-    this.superHeroService
-      .getHeroes(
-        this.id,
-        this.name,
-        this.firstName,
-        this.lastName,
-        this.place,
-        this.limit
-      )
-      .subscribe((data) => (this.dataSource.data = data));
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+    if (!userString) return;
+    const user: User = JSON.parse(userString);
+    this.authService.setCurrentUser(user);
   }
 
-  public doFilter = (value: string) => {
-    this.dataSource.filter = value.trim().toLocaleLowerCase();
-  };
-
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
-  updateHeroList(heroes: SuperHero[]) {
-    this.heroes = heroes;
-  }
-
-  initNewHero() {
-    this.heroToEdit = new SuperHero();
-  }
-
-  editHero(hero: SuperHero) {
-    this.heroToEdit = hero;
-    console.log(this.heroToEdit);
-  }
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'list/id', component: EditHeroComponent },
   { path: 'members', component: MemberListComponent },
   { path: 'members/id', component: MemberDetailComponent },
-  { path: 'messsages', component: MessagesComponent },
+  { path: 'messages', component: MessagesComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

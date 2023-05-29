@@ -1,28 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from 'environments/environment';
+import { User } from 'app/_models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private url = '/Auth/';
+  private currentUserSource = new BehaviorSubject<User | null>(null);
+  currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  login(model: any) {
-    return this.http.post(environment.apiUrl + this.url + 'login', model).pipe(
-      map((response: any) => {
+  login(model: User) {
+    return this.http.post<User>(environment.apiUrl + this.url + 'login', model).pipe(
+      map((response: User) => {
         const user = response;
         if (user) {
-          localStorage.setItem('token', user.token);
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
         }
       })
     );
   }
 
+  setCurrentUser(user: User) {
+    this.currentUserSource.next(user);
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.currentUserSource.next(null);
+  }
+
   register(model: any) {
-    return this.http.post(environment.apiUrl + this.url + 'register', model);
+    return this.http.post<User>(environment.apiUrl + this.url + 'register', model).pipe(
+      map( user => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    );
   }
 }
