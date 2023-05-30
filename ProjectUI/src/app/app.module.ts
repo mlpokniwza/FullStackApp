@@ -38,6 +38,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+// import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { FileUploadModule } from 'ng2-file-upload';
       type: 'line-scale.party'
     }),
     FileUploadModule,
+    PaginationModule.forRoot(),
+    // TimeagoModule.forRoot(),
   ],
   exports: [
   ],

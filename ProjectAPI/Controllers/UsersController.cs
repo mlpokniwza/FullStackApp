@@ -4,15 +4,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjectAPI.DTO;
 using ProjectAPI.Extensions;
+using ProjectAPI.Helpers;
 using ProjectAPI.Interfaces;
 using ProjectAPI.Models;
 
 namespace ProjectAPI.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
 
@@ -28,10 +27,12 @@ namespace ProjectAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUser()
+        public async Task<ActionResult<PagedList<MemberDto>>> GetUser([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetMemberAsync();
+            var users = await _userRepository.GetMemberAsync(userParams);
 
+            Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, 
+            users.PageSize, users.TotalCount, users.TotalPages));
             return Ok(users);
         }
 

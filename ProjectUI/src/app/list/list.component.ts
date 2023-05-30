@@ -26,9 +26,9 @@ export class ListComponent implements OnInit, AfterViewInit {
   dirtyFormID = 'something';
   resetForm = <HTMLFormElement>document.getElementById(this.dirtyFormID);
 
-  public test(): void {
-    console.log(this.heroToEdit);
-  }
+  // public test(): void {
+  //   console.log(this.heroToEdit);
+  // }
 
   public displayedColumns = [
     'id',
@@ -68,10 +68,6 @@ export class ListComponent implements OnInit, AfterViewInit {
       )
       .subscribe((data) => (this.dataSource.data = data));
   }
-
-  public doFilter = (value: string) => {
-    this.dataSource.filter = value.trim().toLocaleLowerCase();
-  };
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;

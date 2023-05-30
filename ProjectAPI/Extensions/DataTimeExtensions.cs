@@ -4,7 +4,7 @@ namespace ProjectAPI.Extensions
     {
         public static int CalcuateAge(this DateOnly dob)
         {
-            var today = DateOnly.FromDateTime(DateTime.UtcNow);
+            var today = DateOnly.FromDateTime(DateTime.Now);
 
             var age = today.Year - dob.Year;
 

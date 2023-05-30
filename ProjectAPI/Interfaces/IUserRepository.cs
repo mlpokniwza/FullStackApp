@@ -1,4 +1,5 @@
 using ProjectAPI.DTO;
+using ProjectAPI.Helpers;
 using ProjectAPI.Models;
 
 namespace ProjectAPI.Interfaces
@@ -10,7 +11,7 @@ namespace ProjectAPI.Interfaces
         Task<IEnumerable<User>> GetUserAsync();
         Task<User> GetUserByIdAsync(int id);
         Task<User> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<MemberDto>> GetMemberAsync();
+        Task<PagedList<MemberDto>> GetMemberAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
 
 

@@ -6,9 +6,7 @@ using ProjectAPI.Models;
 
 namespace ProjectAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class SuperHeroController : ControllerBase
+    public class SuperHeroController : BaseApiController
     {
         private readonly DataContext _context;
 

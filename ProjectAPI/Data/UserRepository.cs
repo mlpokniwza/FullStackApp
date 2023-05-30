@@ -5,6 +5,7 @@ using ProjectAPI.DTO;
 using ProjectAPI.Interfaces;
 using ProjectAPI.Data;
 using ProjectAPI.Models;
+using ProjectAPI.Helpers;
 
 namespace ProjectAPI.Data
 {
@@ -26,11 +27,13 @@ namespace ProjectAPI.Data
                 .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<MemberDto>> GetMemberAsync()
+        public async Task<PagedList<MemberDto>> GetMemberAsync(UserParams userParams)
         {
-            return await _context.Users
+            var query = _context.Users
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsNoTracking();
+
+            return await PagedList<MemberDto>.CreateAsync(query, userParams.PageNumber, userParams.pageSize);
         }
 
         public async Task<User> GetUserByIdAsync(int id)

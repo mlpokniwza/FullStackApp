@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'app/_models/member';
 
 @Component({
@@ -12,7 +12,6 @@ export class MembersCardComponent implements OnInit {
   
 
   constructor(){
-    console.log(this.member)
   }
 
   ngOnInit(): void {}

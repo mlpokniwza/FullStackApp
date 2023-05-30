@@ -11,6 +11,8 @@ export class EditHeroComponent implements OnInit {
   [x: string]: any;
   @Input() hero?: SuperHero;
   @Output() heroesUpdated = new EventEmitter<SuperHero[]>();
+  
+
 
   constructor(private superHeroService: SuperHeroService) { }
 
@@ -32,6 +34,7 @@ export class EditHeroComponent implements OnInit {
     this.superHeroService
       .createHero(hero)
       .subscribe((heroes: SuperHero[]) => this.heroesUpdated.emit(heroes));
+    
   }
 
   //Validate ใน form
