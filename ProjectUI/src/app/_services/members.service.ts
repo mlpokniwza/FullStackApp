@@ -21,26 +21,41 @@ export class MembersService {
   paginationResult: PaginatiedResult<Member[]> = new PaginatiedResult<Member[]>;
 
   constructor(public http: HttpClient, private authService: AuthService) { 
-    // this.authService.currentUser$.pipe(take(1)).subscribe({
-    //   next: user => {
-    //     if (user) {
-    //       // this.userParams = new UserParams(user);
-    //       this.user = user;
-    //     }
-    //   }
-    // })
+    this.authService.currentUser$.pipe(take(1)).subscribe({
+      next: user => {
+        if (user) {
+          this.userParams = new UserParams(user);
+          this.user = user;
+        }
+      }
+    })
+  }
+
+  getUserParams(){
+    return this.userParams;
+  }
+
+  setUserParams(params: UserParams){
+    return this.userParams = params;
   }
 
   getMembers(userParams: UserParams) {
+    const response = this.memberCache.get(Object.values(userParams).join('-'))
+
+    if(response) return of(response);
+
     let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 
     params = params.append('minAge', userParams.minAge);
     params = params.append('maxAge', userParams.maxAge);
     params = params.append('gender', userParams.gender);
 
-    // const response = this.memberCache.get(Object.values(params).join('-'))
-
-    return this.getPaginationResult<Member[]>(this.baseUrl + 'users', params)
+    return this.getPaginationResult<Member[]>(this.baseUrl + 'users', params).pipe(
+      map(response => {
+        this.memberCache.set(Object.values(userParams).join('-'),response);
+        return response;
+      })
+    )
   }
 
   private getPaginationResult<T>(url: string, params: HttpParams) {
@@ -70,8 +85,16 @@ export class MembersService {
     return params;
   }
 
+  // getMember(username: string) {
+  //   var member = this.members.find(member => member.username === username);
+  //   if (member) return of(member);
+  //   return this.http.get<Member>(this.baseUrl + 'users/' + username);
+  // }
+  
   getMember(username: string) {
-    var member = this.members.find(member => member.username === username);
+    const member = [...this.memberCache.values()]
+    .reduce((arr, elem) => arr.concat(elem.result), [])
+    .find((member: Member) => member.username === username);
     if (member) return of(member);
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }

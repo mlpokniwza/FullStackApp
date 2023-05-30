@@ -56,7 +56,6 @@ namespace ProjectAPI.Data
 
         public async Task<bool> SaveAllAsync()
         {
-            // 0 check vaule to save or not
             return await _context.SaveChangesAsync() > 0;
         }
 
