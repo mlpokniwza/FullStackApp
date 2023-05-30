@@ -33,8 +33,11 @@
     </div>
   </div>
   <div class="col-8">
-    <tabset class="member-tabset">
-      <tab heading="About {{ member.knownAs }}">
+    <tabset class="member-tabset" #memberTabs>
+      <tab
+        heading="About {{ member.knownAs }}"
+        (selectTab)="onTabActivated($event)"
+      >
         <div class="container">
           <h4>Description</h4>
           <p>{{ member.introduction }}</p>
@@ -42,26 +45,29 @@
           <p>{{ member.lookingFor }}</p>
         </div>
       </tab>
-      <tab heading="Interestes">
+      <tab heading="Interestes" (selectTab)="onTabActivated($event)">
         <div class="container">
           <h4>Interestes</h4>
           <p>{{ member.interests }}</p>
         </div>
       </tab>
-      <tab heading="Photos">
+      <tab heading="Photos" (selectTab)="onTabActivated($event)">
         <div class="row" *ngIf="member">
           <div class="col-2" *ngFor="let photo of member.photos">
             <img
               src="{{ photo.url }}"
               alt="photo of user"
-              class="img-thumbnail mb-1"
+              class="img-thumbnail mb-2"
             />
           </div>
         </div>
       </tab>
-      <tab heading="Messages">
+      <tab heading="Messages" (selectTab)="onTabActivated($event)">
         <div class="container">
-          <h4>Description</h4>
+          <app-member-messages
+            [messages]="messages"
+            [username]="member.username"
+          ></app-member-messages>
         </div>
       </tab>
     </tabset>

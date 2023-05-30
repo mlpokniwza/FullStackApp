@@ -8,14 +8,14 @@ import { User } from 'app/_models/user';
   providedIn: 'root',
 })
 export class AuthService {
-  private url = 'Auth/';
+  baseUrl = environment.apiUrl;
   private currentUserSource = new BehaviorSubject<User | null>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
   login(model: User) {
-    return this.http.post<User>(environment.apiUrl + this.url + 'login', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'Auth/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -36,7 +36,7 @@ export class AuthService {
   }
 
   register(model: any) {
-    return this.http.post<User>(environment.apiUrl + this.url + 'register', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'Auth/register', model).pipe(
       map(user => {
         if (user) {
           this.setCurrentUser(user);

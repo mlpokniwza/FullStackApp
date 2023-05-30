@@ -16,6 +16,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { FileUploadModule } from 'ng2-file-upload';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 import { AppComponent } from './app.component';
@@ -31,14 +35,12 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { MembersCardComponent } from './members/members-card/members-card.component';
-import { JwtInterceptor } from './_interceptors/jwt.interceptor';
-import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
-import { FileUploadModule } from 'ng2-file-upload';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
+
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 // import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
@@ -57,7 +59,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     LoginComponent,
     MembersCardComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    MemberMessagesComponent
   ],
   imports: [
     BrowserModule,
