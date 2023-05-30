@@ -40,30 +40,32 @@
                 <div class="container">
                     <form #editForm="ngForm" id="editForm" (ngSubmit)="updateMember()">
                         <h4 class="mt-2">Description</h4>
-                        <textarea class="form-control" name="introduction" rows="6"
+                        <textarea class="form-control" id="introduction" name="introduction" rows="6"
                             [(ngModel)]="member.introduction"></textarea>
 
                         <h4 class="mt-2">Looking for</h4>
-                        <textarea class="form-control" name="lookingFor" rows="6"
+                        <textarea class="form-control" id="lookingFor" name="lookingFor" rows="6"
                             [(ngModel)]="member.lookingFor"></textarea>
 
                         <h4 class="mt-2">Interestes</h4>
-                        <textarea class="form-control" name="interests" rows="6"
+                        <textarea class="form-control" id="interests" name="interests" rows="6"
                             [(ngModel)]="member.interests"></textarea>
 
                         <h4 class="mt-2">Location Details: </h4>
                         <div class="d-flex flex-row align-items-center">
                             <label for="city">City: </label>
-                            <input class="form-control mx-2" name="city" type="text" [(ngModel)]="member.city">
+                            <input class="form-control mx-2" id="city" name="city" type="text"
+                                [(ngModel)]="member.city">
                             <label for="country">Country: </label>
-                            <input class="form-control mx-2" name="country" type="text" [(ngModel)]="member.country">
+                            <input class="form-control mx-2" id="country" name="country" type="text"
+                                [(ngModel)]="member.country">
                         </div>
                     </form>
                 </div>
             </tab>
             <tab heading="Edit Photos">
                 <div class="container">
-                    <h4>Phot</h4>
+                    <app-photo-editor [member]="member"></app-photo-editor>
                 </div>
             </tab>
         </tabset>

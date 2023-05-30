@@ -14,7 +14,7 @@ export class MemberListComponent implements OnInit {
   constructor(private memberService: MembersService) { }
 
   ngOnInit(): void {
-    this.memberService.getMembers();
+    this.members$ = this.memberService.getMembers();
   }
 
 }

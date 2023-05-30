@@ -46,7 +46,11 @@
                 </div>
             </tab>
             <tab heading="Photos">
-                <ngx-gallery [images]="galleryImages"></ngx-gallery>
+                <div class="row" *ngIf="member">
+                <div class="col-2" *ngFor="let photo of member.photos">
+                    <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1">
+                </div>
+            </div>
             </tab>
             <tab heading="Messages">
                 <div class="container">

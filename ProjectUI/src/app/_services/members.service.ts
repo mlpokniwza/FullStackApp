@@ -9,16 +9,32 @@ import { map, of } from 'rxjs';
 })
 export class MembersService {
   baseUrl = environment.apiUrl;
+
+  // constructor(public http: HttpClient) { }
+
+  // getMembers() {
+  //   return this.http.get<Member[]>(this.baseUrl + 'users');
+  // }
+
+  // getMember(username: string) {
+  //   return this.http.get<Member>(this.baseUrl + 'users/' + username);
+  // }
+
+  // updateMember(member: Member) {
+  //   return this.http.put(this.baseUrl + 'users', member);
+  // }
+
+
   members: Member[] = [];
 
   constructor(public http: HttpClient) { }
 
   getMembers() {
     if (this.members.length > 0) return of(this.members);
-    return this.http.get<Member[]>(this.baseUrl + 'Users').pipe(
-      map(members => {
-        this.members = members;
-        return members;
+    return this.http.get<Member[]>(this.baseUrl + 'users').pipe(
+      map(member => {
+        this.members = member;
+        return member;
       })
     );
   }
@@ -26,25 +42,23 @@ export class MembersService {
   getMember(username: string) {
     var member = this.members.find(member => member.username === username);
     if (member) return of(member);
-    return this.http.get<Member>(this.baseUrl + 'Users/' + username);
+    return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
 
-  // getHttpOptions() {
-  //   const userString = localStorage.getItem('user');
-  //   if (!userString) return;
-  //   const user = JSON.parse(userString);
-  //   return {
-  //     headers: new HttpHeaders({
-  //       Authorization: 'Bearer ' + user.token
-  //     })
-  //   }
-  // }
   updateMember(member: Member) {
-    return this.http.put(this.baseUrl + 'Users', member).pipe(
+    return this.http.put(this.baseUrl + 'users', member).pipe(
       map(() => {
         const index = this.members.indexOf(member);
         this.members[index] = { ...this.members[index], ...member };
       })
     );
+  }
+
+  setMainPhoto(photoId: number) {
+    return this.http.put(this.baseUrl +'users/set-main-phot/' + photoId, {});
+  }
+
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl +'users/delete-photo/' + photoId);
   }
 }
