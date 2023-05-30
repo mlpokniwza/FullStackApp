@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'app/_models/member';
+import { Photo } from 'app/_models/photo';
 import { User } from 'app/_models/user';
 import { AuthService } from 'app/_services/auth.service';
 import { MembersService } from 'app/_services/members.service';
@@ -58,6 +59,23 @@ export class PhotoEditorComponent implements OnInit {
     }
 
   }
+
+  setMainPhoto(photo: Photo) {
+    this.membersService.setMainPhoto(photo.id).subscribe({
+      next: () => {
+        if (this.user && this.member) {
+          this.user.photoUrl = photo.url;
+          this.authService.setCurrentUser(this.user);
+          this.member.photosUrl = photo.url;
+          this.member.photos.forEach(p=>{
+            if (p.isMain) p.isMain = false;
+            if (p.id === photo.id) p.isMain = true;
+          })
+        }
+      }
+    })
+  }
+
   deletePhoto(photoId: number) {
     this.membersService.deletePhoto(photoId).subscribe({
       next: () => {

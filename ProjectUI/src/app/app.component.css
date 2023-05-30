@@ -1,14 +1,11 @@
-body,
-html {
-  height: 100%;
-}
+
 
 .cool {
   /* background-image: url("https://wallpaperaccess.com/full/4994209.jpg"); */
   background-image: url("https://coolbackgrounds.io/images/backgrounds/index/ranger-4df6c1b6.png");
 
   /* Full height */
-  height: 200vh;
+  height: 130vh;
 
   /* Center and scale the image nicely */
   background-position: center;

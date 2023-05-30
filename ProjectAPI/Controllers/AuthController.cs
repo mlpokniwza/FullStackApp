@@ -1,10 +1,7 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.DTO;
 using ProjectAPI.Interfaces;
@@ -54,8 +51,9 @@ namespace ProjectAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x =>
-            x.Username == userForLoginDto.Username);
+            var user = await _context.Users
+            .Include(p => p.Photos)
+            .SingleOrDefaultAsync(x => x.Username == userForLoginDto.Username);
 
             if (user == null) return Unauthorized("invalid username");
 
@@ -72,6 +70,7 @@ namespace ProjectAPI.Controllers
             {
                 Username = user.Username,
                 Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url
             };
         }
 
