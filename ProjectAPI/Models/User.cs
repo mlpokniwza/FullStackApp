@@ -4,10 +4,6 @@ namespace ProjectAPI.Models
 {
     public class User : IdentityUser<int>
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSalt { get; set; }
         public DateOnly DateOfBirth { get; set; }
         public string KnownAs { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
@@ -22,6 +18,7 @@ namespace ProjectAPI.Models
 
         public List<Message> MessageSent { get; set; }
         public List<Message> MessageReceived { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
 
     }
 

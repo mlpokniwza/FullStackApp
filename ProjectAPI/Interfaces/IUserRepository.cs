@@ -10,7 +10,7 @@ namespace ProjectAPI.Interfaces
         Task<bool> SaveAllAsync();
         Task<IEnumerable<User>> GetUserAsync();
         Task<User> GetUserByIdAsync(int id);
-        Task<User> GetUserByUsernameAsync(string username);
+        Task<User> GetUserByUserNameAsync(string username);
         Task<PagedList<MemberDto>> GetMemberAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
 

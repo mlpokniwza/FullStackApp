@@ -1,6 +1,6 @@
 [
     {
-        "Username": "Lisa",
+        "UserName": "Lisa",
         "Gender": "female",
         "DateOfBirth": "1956-07-22",
         "KnownAs": "Lisa",
@@ -19,7 +19,7 @@
         ]
     },
     {
-        "Username": "Karen",
+        "UserName": "Karen",
         "Gender": "female",
         "DateOfBirth": "1995-10-12",
         "KnownAs": "Karen",

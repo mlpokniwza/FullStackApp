@@ -1,11 +1,13 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.Extensions;
 using ProjectAPI.Helpers;
 using ProjectAPI.Interfaces;
+using ProjectAPI.Models;
 using ProjectAPI.Serviecs;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +27,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddCors();
 
 builder.Services.AddApplicationServices(builder.Configuration);
+
+builder.Services.AddIdentityCore<User>(opt => opt.Password.RequireNonAlphanumeric = false)
+    .AddRoles<Role>()
+    .AddRoleManager<RoleManager<Role>>()
+    .AddEntityFrameworkStores<DataContext>();
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(option =>
     {
@@ -62,17 +70,18 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// using var scope = app.Services.CreateScope();
-// var services = scope.ServiceProvider;
-// try
-// {
-//     var context = services.GetRequiredService<DataContext>();
-//     await context.Database.MigrateAsync();
-//     await Seed.SeedUsers(context);
-// }
-// catch (Exception ex)
-// {
-//     var logger = services.GetService<ILogger<Program>>();
-//     logger.LogError(ex, "Failed to migrate");
-// }
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var context = services.GetRequiredService<DataContext>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    await context.Database.MigrateAsync();
+    await Seed.SeedUsers(userManager);
+}
+catch (Exception ex)
+{
+    var logger = services.GetService<ILogger<Program>>();
+    logger.LogError(ex, "Failed to migrate");
+}
 app.Run();

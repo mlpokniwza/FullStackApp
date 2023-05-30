@@ -40,9 +40,9 @@ namespace ProjectAPI.Data
 
             query = messageParams.Contaier switch
             {
-                "Inbox" => query.Where(x => x.RecipientUsername == messageParams.Username),
-                "Outbox" => query.Where(x => x.SenderUsername == messageParams.Username),
-                _ => query.Where(x => x.RecipientUsername == messageParams.Username && x.DateRead == null)
+                "Inbox" => query.Where(x => x.RecipientUserName == messageParams.UserName),
+                "Outbox" => query.Where(x => x.SenderUserName == messageParams.UserName),
+                _ => query.Where(x => x.RecipientUserName == messageParams.UserName && x.DateRead == null)
             };
 
             var message = query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider);
@@ -57,16 +57,16 @@ namespace ProjectAPI.Data
                 .Include(u => u.Sender).ThenInclude(p => p.Photos)
                 .Include(u => u.Recipient).ThenInclude(p => p.Photos)
                 .Where(
-                    m => m.RecipientUsername == currentUserName &&
-                    m.SenderUsername == recipientUserName ||
-                    m.RecipientUsername == recipientUserName &&
-                    m.SenderUsername == currentUserName
+                    m => m.RecipientUserName == currentUserName &&
+                    m.SenderUserName == recipientUserName ||
+                    m.RecipientUserName == recipientUserName &&
+                    m.SenderUserName == currentUserName
                 )
                 .OrderBy(m => m.MessageSent)
                 .ToListAsync();
 
             var unreadMessages = messages.Where(m => m.DateRead == null
-                && m.RecipientUsername == currentUserName).ToList();
+                && m.RecipientUserName == currentUserName).ToList();
 
             if (unreadMessages.Any())
             {

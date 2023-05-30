@@ -1,11 +1,11 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPI.DTO;
-using ProjectAPI.Interfaces;
 using ProjectAPI.Data;
-using ProjectAPI.Models;
+using ProjectAPI.DTO;
 using ProjectAPI.Helpers;
+using ProjectAPI.Interfaces;
+using ProjectAPI.Models;
 
 namespace ProjectAPI.Data
 {
@@ -22,7 +22,7 @@ namespace ProjectAPI.Data
         public async Task<MemberDto> GetMemberAsync(string username)
         {
             return await _context.Users
-                .Where(x => x.Username == username)
+                .Where(x => x.UserName == username)
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .SingleOrDefaultAsync();
         }
@@ -41,11 +41,11 @@ namespace ProjectAPI.Data
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username)
+        public async Task<User> GetUserByUserNameAsync(string username)
         {
             return await _context.Users
                 .Include(p => p.Photos)
-                .SingleOrDefaultAsync(x => x.Username == username);
+                .SingleOrDefaultAsync(x => x.UserName == username);
         }
         public async Task<IEnumerable<User>> GetUserAsync()
         {

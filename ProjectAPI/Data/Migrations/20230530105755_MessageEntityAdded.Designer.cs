@@ -41,7 +41,7 @@ namespace HeroAPI.Data.Migrations
                     b.Property<int>("RecipientId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("RecipientUsername")
+                    b.Property<string>("RecipientUserName")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("SenderDeleted")
@@ -50,7 +50,7 @@ namespace HeroAPI.Data.Migrations
                     b.Property<int>("SenderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("SenderUsername")
+                    b.Property<string>("SenderUserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -152,7 +152,7 @@ namespace HeroAPI.Data.Migrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

@@ -27,13 +27,13 @@ namespace ProjectAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<MessageDto>> CreateMessage(CreateMessageDto createMessageDto)
         {
-            var username = User.GetUsername();
+            var username = User.GetUserName();
 
-            if (username == createMessageDto.RecipientUsername.ToLower())
+            if (username == createMessageDto.RecipientUserName.ToLower())
                 return BadRequest("You cannot send a message to yourself");
 
-            var sender = await _userRepository.GetUserByUsernameAsync(username);
-            var recipient = await _userRepository.GetUserByUsernameAsync(createMessageDto.RecipientUsername);
+            var sender = await _userRepository.GetUserByUserNameAsync(username);
+            var recipient = await _userRepository.GetUserByUserNameAsync(createMessageDto.RecipientUserName);
 
             if (recipient == null) return NotFound();
 
@@ -41,8 +41,8 @@ namespace ProjectAPI.Controllers
             {
                 Sender = sender,
                 Recipient = recipient,
-                SenderUsername = sender.Username,
-                RecipientUsername = recipient.Username,
+                SenderUserName = sender.UserName,
+                RecipientUserName = recipient.UserName,
                 Content = createMessageDto.Content
             };
 
@@ -58,7 +58,7 @@ namespace ProjectAPI.Controllers
         public async Task<ActionResult<PagedList<MessageDto>>> GetMessagesForUser([FromQuery]
             MessageParams messageParams)
         {
-            messageParams.Username = User.GetUsername();
+            messageParams.UserName = User.GetUserName();
 
             var messages = await _messageRepository.GetMessageForUser(messageParams);
 
@@ -71,7 +71,7 @@ namespace ProjectAPI.Controllers
         [HttpGet("thread/{username}")]
         public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessagesThread(string username)
         {
-            var currentUserName = User.GetUsername();
+            var currentUserName = User.GetUserName();
 
             return Ok(await _messageRepository.GetMessageThread(currentUserName, username));
         }
