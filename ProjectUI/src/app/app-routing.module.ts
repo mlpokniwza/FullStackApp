@@ -9,6 +9,7 @@ import { ListComponent } from './list/list.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'members/:username', component: MemberDetailComponent },
   { path: 'member/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
   { path: 'messages', component: MessagesComponent },
+  { path: 'admin', component: AdminPanelComponent },
   { path: '**', component: NotFoundComponent, pathMatch: 'full' },
 ];
 

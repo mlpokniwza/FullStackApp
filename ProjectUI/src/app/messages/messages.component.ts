@@ -3,6 +3,7 @@ import { Message } from 'app/_models/message';
 import { Pagination } from 'app/_models/pagination';
 import { MessageService } from 'app/_services/message.service';
 
+
 @Component({
   selector: 'app-messages',
   templateUrl: './messages.component.html',
@@ -20,6 +21,7 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMessages();
+    console.log(this.messages);
   }
 
 

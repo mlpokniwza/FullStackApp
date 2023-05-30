@@ -25,7 +25,7 @@ namespace ProjectAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register([FromBody] UserForRegisterDto userForRegisterDto)
         {
-            // if (await UserSecretsConfigurationExtensions(userForRegisterDto.Username)) return BadRequest("Username is already taken");
+            if (await UserExists(userForRegisterDto.Username)) return BadRequest("Username is already taken");
 
             using var hmac = new HMACSHA512();
 
@@ -71,46 +71,6 @@ namespace ProjectAPI.Controllers
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url
             };
         }
-
-        // [HttpPost("login")]
-        // public async Task<ActionResult<User>> Login([FromBody] UserForLoginDto userForLoginDto)
-        // {
-        //     //check user matches
-        //     var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
-
-        //     if (userFromRepo == null)
-        //         return Unauthorized("invalid username");
-
-        //     var claims = new[]
-        //     {
-        //         new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-        //         new Claim(ClaimTypes.Name, userFromRepo.Username)
-        //     };
-        //     // create security key
-        //     var key = new SymmetricSecurityKey(Encoding.UTF8
-        //         .GetBytes(_config.GetSection("AppSettings:Token").Value));
-
-        //     // encrypt key with hashing algorithm
-        //     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-        //     var tokenDescriptor = new SecurityTokenDescriptor
-        //     {
-        //         Subject = new ClaimsIdentity(claims),
-        //         Expires = DateTime.Now.AddDays(1),
-        //         SigningCredentials = creds
-        //     };
-
-        //     var tokenHandler = new JwtSecurityTokenHandler();
-
-        //     var token = tokenHandler.CreateToken(tokenDescriptor);
-
-        //     return Ok(new
-        //     {
-        //         username = userForLoginDto.Username,
-        //         token = tokenHandler.WriteToken(token)
-        //     });
-        // }
-
         private async Task<bool> UserExists(string username)
         {
             return await _context.Users.AnyAsync(x => x.Username == username.ToLower());

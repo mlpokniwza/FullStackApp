@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from 'app/_models/message';
 import { MessageService } from 'app/_services/message.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-member-messages',
@@ -15,10 +16,17 @@ export class MemberMessagesComponent implements OnInit {
   @Input() messages: Message[] = [];
   messageContent = '';
 
+
   constructor(private messageService: MessageService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+  }
+
+  tran(message: string) {
+    const datepipe: DatePipe = new DatePipe('en-US')
+    let formattedDate = datepipe.transform(message, 'dd-MMM-YYYY HH:mm:ss')
+    return (formattedDate);
   }
 
   sendMessage() {

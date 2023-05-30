@@ -41,7 +41,8 @@ import { PhotoEditorComponent } from './members/photo-editor/photo-editor.compon
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
-// import { TimeagoModule } from 'ngx-timeago';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,9 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     MembersCardComponent,
     MemberEditComponent,
     PhotoEditorComponent,
-    MemberMessagesComponent
+    MemberMessagesComponent,
+    DateAgoPipe,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +90,7 @@ import { MemberMessagesComponent } from './members/member-messages/member-messag
     }),
     FileUploadModule,
     PaginationModule.forRoot(),
-    // TimeagoModule.forRoot(),
+    // DateAgoPipe,
   ],
   exports: [
   ],
