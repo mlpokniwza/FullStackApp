@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +25,6 @@ namespace ProjectAPI.Controllers
             _userRepository = userRepository;
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<PagedList<MemberDto>>> GetUser([FromQuery] UserParams userParams)
         {
@@ -37,7 +35,6 @@ namespace ProjectAPI.Controllers
             return Ok(users);
         }
 
-        [Authorize(Roles = "Member")]
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {

@@ -20,6 +20,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { FileUploadModule } from 'ng2-file-upload';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 import { AppComponent } from './app.component';
@@ -43,6 +44,10 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { MemberMessagesComponent } from './members/member-messages/member-messages.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +68,11 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
     PhotoEditorComponent,
     MemberMessagesComponent,
     DateAgoPipe,
-    AdminPanelComponent
+    AdminPanelComponent,
+    HasRoleDirective,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    RolesModalComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +99,7 @@ import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
     }),
     FileUploadModule,
     PaginationModule.forRoot(),
-    // DateAgoPipe,
+    ModalModule.forRoot()
   ],
   exports: [
   ],

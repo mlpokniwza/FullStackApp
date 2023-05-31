@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(model: User) {
-    return this.http.post<User>(this.baseUrl + 'Auth/login', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'auth/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -25,7 +25,21 @@ export class AuthService {
     );
   }
 
+  register(model: any) {
+    return this.http.post<User>(this.baseUrl + 'auth/register', model).pipe(
+      map(user => {
+        if (user) {
+          this.setCurrentUser(user);
+        }
+      })
+    );
+  }
+
   setCurrentUser(user: User) {
+    user.role = [];
+    const roles = this.getDecodedToken(user.token).role;
+    Array.isArray(roles) ? user.role = roles : user.role.push(roles);
+    // console.log(user.role);
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -35,13 +49,7 @@ export class AuthService {
     this.currentUserSource.next(null);
   }
 
-  register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'Auth/register', model).pipe(
-      map(user => {
-        if (user) {
-          this.setCurrentUser(user);
-        }
-      })
-    );
+  getDecodedToken(token: string) {
+    return JSON.parse(atob(token.split('.')[1]))
   }
 }
