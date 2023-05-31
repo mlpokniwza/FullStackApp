@@ -30,7 +30,6 @@ export class UserManagementComponent implements OnInit {
     this.adminService.getUsersWithRoles().subscribe({
       next: users => {
         this.users = users
-        console.log(users);
       }
     })
 
@@ -42,7 +41,7 @@ export class UserManagementComponent implements OnInit {
       initialState: {
         username: users.username,
         availableRoles: this.availableRoles,
-        selectRoles: [...users.role]
+        selectRoles: [...users.roles]
       }
     }
     this.bsModelRef = this.modalService.show(RolesModalComponent, config);

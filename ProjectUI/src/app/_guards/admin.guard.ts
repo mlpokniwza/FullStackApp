@@ -16,7 +16,7 @@ export class adminGuard implements CanActivate {
     return this.authService.currentUser$.pipe(
       map(user => {
         if (!user) return false;
-        if (user.role.includes('Admin') || user.role.includes('Moderator')) {
+        if (user.roles.includes('Admin') || user.roles.includes('Moderator')) {
           return true;
         }
         else {
