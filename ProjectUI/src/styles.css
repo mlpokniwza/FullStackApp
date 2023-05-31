@@ -45,13 +45,13 @@ $HeroUI-theme: mat.define-light-theme((
 
 
 .tab-panel {
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd;
   padding: 10px;
   border-radius: 4px;
 }
 
 .nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
-  border-bottom: 4px solid #fbcdcf;
+  border-bottom: 4px solid #cddffb;
 }
 
 .member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
@@ -69,7 +69,7 @@ $HeroUI-theme: mat.define-light-theme((
 }
 
 .member-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid #E95420;
+  border-bottom: 4px solid #20a9e9;
   position: relative;
 }
 
