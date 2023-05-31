@@ -5,6 +5,7 @@
       btnRadio="Unread"
       name="Unread"
       [(ngModel)]="container"
+      ngDefaultControl
       (click)="loadMessages()"
     >
       <i class="fa fa-envelope"></i>Unread
@@ -14,6 +15,7 @@
       btnRadio="Inbox"
       name="Inbox"
       [(ngModel)]="container"
+      ngDefaultControl
       (click)="loadMessages()"
     >
       <i class="fa fa-envelope-open"></i>Inbox
@@ -23,6 +25,7 @@
       btnRadio="Outbox"
       name="Outbox"
       [(ngModel)]="container"
+      ngDefaultControl
       (click)="loadMessages()"
     >
       <i class="fa fa-paper-plane"></i>Outbox

@@ -3,6 +3,7 @@ using ProjectAPI.Data;
 using ProjectAPI.Helpers;
 using ProjectAPI.Interfaces;
 using ProjectAPI.Serviecs;
+using ProjectAPI.SignalR;
 
 namespace ProjectAPI.Extensions
 {
@@ -24,6 +25,7 @@ namespace ProjectAPI.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
 
             return services;
         }

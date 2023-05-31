@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.Extensions;
 using ProjectAPI.Models;
+using ProjectAPI.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,7 +42,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuer = false,
             ValidateAudience = false
         };
+        option.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
+
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
@@ -61,16 +78,23 @@ app.UseHttpsRedirection();
 
 
 app.UseCors(x => x
-    .AllowAnyOrigin()
+    // .AllowAnyOrigin()
     .AllowAnyMethod()
     .AllowAnyHeader()
+    .AllowCredentials()
     .WithOrigins("https://localhost:4200"));
+
+// app.UseStaticFiles();
+
+// app.UseRouting();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/messages");
 
 // using var scope = app.Services.CreateScope();
 // var services = scope.ServiceProvider;
