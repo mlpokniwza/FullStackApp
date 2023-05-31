@@ -84,13 +84,14 @@ app.UseCors(x => x
     .AllowCredentials()
     .WithOrigins("https://localhost:4200"));
 
-// app.UseStaticFiles();
 
 // app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence");
