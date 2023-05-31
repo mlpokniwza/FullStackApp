@@ -14,15 +14,15 @@ import { take } from 'rxjs';
 })
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm | undefined;
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any){
-    if(this.editForm?.dirty){
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.editForm?.dirty) {
       $event.returnValue = true;
     }
   }
   member: Member | undefined;
   user: User | null = null;
 
-  constructor(private memberService: MembersService, 
+  constructor(private memberService: MembersService,
     private authService: AuthService, private toastr: ToastrService) {
     this.authService.currentUser$.pipe(take(1)).subscribe({
       next: user => {
@@ -45,7 +45,7 @@ export class MemberEditComponent implements OnInit {
     })
   }
 
-  updateMember(){
+  updateMember() {
     this.memberService.updateMember(this.editForm?.value).subscribe({
       next: _ => {
         this.toastr.success('Member updated');

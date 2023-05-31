@@ -5,10 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjectAPI.Data;
 using ProjectAPI.Extensions;
-using ProjectAPI.Helpers;
-using ProjectAPI.Interfaces;
 using ProjectAPI.Models;
-using ProjectAPI.Serviecs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +42,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+    opt.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+});
 
 var app = builder.Build();
 
@@ -70,18 +72,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-try
-{
-    var context = services.GetRequiredService<DataContext>();
-    var userManager = services.GetRequiredService<UserManager<User>>();
-    await context.Database.MigrateAsync();
-    await Seed.SeedUsers(userManager);
-}
-catch (Exception ex)
-{
-    var logger = services.GetService<ILogger<Program>>();
-    logger.LogError(ex, "Failed to migrate");
-}
+// using var scope = app.Services.CreateScope();
+// var services = scope.ServiceProvider;
+// try
+// {
+//     var context = services.GetRequiredService<DataContext>();
+//     var userManager = services.GetRequiredService<UserManager<User>>();
+//     var roleManager = services.GetRequiredService<RoleManager<Role>>();
+//     await context.Database.MigrateAsync();
+//     await Seed.SeedUsers(userManager, roleManager);
+// }
+// catch (Exception ex)
+// {
+//     var logger = services.GetService<ILogger<Program>>();
+//     logger.LogError(ex, "Failed to migrate");
+// }
 app.Run();

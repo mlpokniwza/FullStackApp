@@ -11,7 +11,7 @@ using ProjectAPI.Data;
 namespace HeroAPI.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230530172442_IdentityAdded")]
+    [Migration("20230531043045_IdentityAdded")]
     partial class IdentityAdded
     {
         /// <inheritdoc />

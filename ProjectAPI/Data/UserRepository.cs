@@ -1,7 +1,6 @@
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using ProjectAPI.Data;
 using ProjectAPI.DTO;
 using ProjectAPI.Helpers;
 using ProjectAPI.Interfaces;
