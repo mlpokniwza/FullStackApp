@@ -39,15 +39,15 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadMember();
-    this.route.data.subscribe({
-      next: data => this.member = data['member']
-    })
+    // this.route.data.subscribe({
+    //   next: data => this.member = data['member']
+    // })
 
-    this.route.queryParams.subscribe({
-      next: params => {
-        params['tab'] && this.selectTab(params['tab'])
-      }
-    })
+    // this.route.queryParams.subscribe({
+    //   next: params => {
+    //     params['tab'] && this.selectTab(params['tab'])
+    //   }
+    // })
     // this.galleryOptions = [
     //   {
     //     width: '500px',
@@ -72,7 +72,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     }
     return imageUrls;
   }
-
+  
   loadMember() {
     const username = this.route.snapshot.paramMap.get('username');
     if (!username) return;
@@ -94,9 +94,9 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectTab(heading: string) {
-    if (this.memberTabs) {
-      this.memberTabs.tabs.find(x => x.heading === heading)!.active = true;
+  selectTab(heading: string){
+    if(this.memberTabs){
+      this.memberTabs.tabs.find(x => x.heading === heading) !.active = true;
     }
   }
 

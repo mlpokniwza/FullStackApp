@@ -9,9 +9,9 @@ export class HomeComponent implements OnInit {
   registerMode = true;
   users: any;
 
-  constructor() { 
+  constructor() {
     this.registerMode = !this.registerMode;
-   }
+  }
 
   ngOnInit(): void { }
 

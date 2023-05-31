@@ -99,7 +99,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     }),
     FileUploadModule,
     PaginationModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   exports: [
   ],
