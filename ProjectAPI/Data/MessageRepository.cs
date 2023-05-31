@@ -53,9 +53,7 @@ namespace ProjectAPI.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUserName, string recipientUserName)
         {
-            var messages = await _context.Messages
-                .Include(u => u.Sender).ThenInclude(p => p.Photos)
-                .Include(u => u.Recipient).ThenInclude(p => p.Photos)
+            var query = _context.Messages
                 .Where(
                     m => m.RecipientUserName == currentUserName &&
                     m.SenderUserName == recipientUserName ||
@@ -63,9 +61,9 @@ namespace ProjectAPI.Data
                     m.SenderUserName == currentUserName
                 )
                 .OrderBy(m => m.MessageSent)
-                .ToListAsync();
+                .AsQueryable();
 
-            var unreadMessages = messages.Where(m => m.DateRead == null
+            var unreadMessages = query.Where(m => m.DateRead == null
                 && m.RecipientUserName == currentUserName).ToList();
 
             if (unreadMessages.Any())
@@ -77,7 +75,7 @@ namespace ProjectAPI.Data
                 await _context.SaveChangesAsync();
             }
 
-            return _mapper.Map<IEnumerable<MessageDto>>(messages);
+            return await query.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<bool> SaveAllAsync()
